@@ -7,11 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MasterPageComponent } from './master-page/master-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetailPageComponent } from './detail-page/detail-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MasterPageComponent,
+    DetailPageComponent,
   ],
   imports: [
     BrowserModule,
