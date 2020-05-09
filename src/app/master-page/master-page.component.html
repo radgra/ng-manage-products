@@ -1,0 +1,93 @@
+<ui5-shellbar [primaryTitle]="title" logo="assets/sap-logo-svg.svg">
+</ui5-shellbar>
+
+<ui5-tabcontainer tab-layout="Inline" show-overflow="true" collapsed fixed>
+    <ui5-tab icon="list" additional-text="(10)" semantic-color="Default" selected>
+    </ui5-tab>
+    <ui5-tab-separator></ui5-tab-separator>
+    <ui5-tab icon="accept" additional-text="(10)" semantic-color="Positive">
+    </ui5-tab>
+    <ui5-tab icon="message-warning" additional-text="(2)" semantic-color="Critical">
+    </ui5-tab>
+    <ui5-tab icon="warning" additional-text="(16)" semantic-color="Negative">
+    </ui5-tab>
+</ui5-tabcontainer>
+<div class="container">
+    <div class="table-info">
+        <ui5-title level="H4">Products({{products && products.length}})</ui5-title>
+        <ui5-input id="myInput" placeholder="Search">
+            <ui5-icon slot="icon" name="search"></ui5-icon>
+        </ui5-input>
+    </div>
+    <div class="table-container">
+        <ui5-table class="demo-table" id="tbl" sticky-column-header="">
+            <!-- Columns -->
+            <ui5-table-column slot="columns-1" sticky="" class="checkbox-column">
+                <span style="line-height: 1.4rem">
+                    <ui5-checkbox [checked]="areAllSelected()" (change)="onToggleAll($event)"></ui5-checkbox>
+                </span>
+            </ui5-table-column>
+            <ui5-table-column slot="columns-2" sticky="">
+                <span style="line-height: 1.4rem">Product</span>
+            </ui5-table-column>
+
+            <ui5-table-column slot="columns-3" min-width="800" popin-text="Supplier" sticky="">
+                <span style="line-height: 1.4rem">Supplier</span>
+            </ui5-table-column>
+
+            <ui5-table-column slot="columns-4" min-width="600" popin-text="Price" class="data-column" demand-popin=""
+                sticky="">
+                <span style="line-height: 1.4rem">Price</span>
+            </ui5-table-column>
+
+            <ui5-table-column slot="columns-5" min-width="600" popin-text="Units Ordered" class="data-column"
+                demand-popin="" sticky="">
+                <span style="line-height: 1.4rem">Units Ordered</span>
+            </ui5-table-column>
+
+            <ui5-table-column slot="columns-6" sticky="" min-width="600" class="data-column">
+                <span style="line-height: 1.4rem">Units in Stock</span>
+            </ui5-table-column>
+            <ui5-table-column slot="columns-7"  sticky=""  class="icon-column">
+            </ui5-table-column>
+
+            <ui5-table-row *ngFor="let product of products">
+                <ui5-table-cell slot="default-1">
+                    <ui5-checkbox [checked]="product.selected"></ui5-checkbox>
+                </ui5-table-cell>
+                <ui5-table-cell slot="default-2" class="product-cell">{{product.ProductName}}</ui5-table-cell>
+                <ui5-table-cell slot="default-3">{{product.supplierData.CompanyName}}</ui5-table-cell>
+                <ui5-table-cell slot="default-4">
+                    <span class="text-emph">
+                        {{product.UnitPrice | currency:'EUR'}}
+                    </span>
+                </ui5-table-cell>
+                <ui5-table-cell slot="default-5">
+                    <span class="text-emph">
+                        {{product.UnitsOnOrder | number:'1.2'}}
+                    </span>
+                    PC
+                </ui5-table-cell>
+                <ui5-table-cell slot="default-6" [ngClass]="getStylingForStock(product)">
+                    <span class="text-emph">
+                        {{product.UnitsInStock | number:'1.2'}}
+                    </span>
+                    PC
+                </ui5-table-cell>
+                <ui5-table-cell slot="default-7">
+                    <ui5-icon name="navigation-right-arrow" class="nav-icon"></ui5-icon>
+                </ui5-table-cell>
+            </ui5-table-row>
+        </ui5-table>
+    </div>
+</div>
+<div fd-bar [barDesign]="'floating-footer'">
+    <div fd-bar-right>
+        <fd-bar-element>
+            <button fd-button [fdType]="'positive'" [compact]="false">Save</button>
+        </fd-bar-element>
+        <fd-bar-element>
+            <button fd-button [fdType]="'negative'" [compact]="false">Cancel</button>
+        </fd-bar-element>
+    </div>
+</div>
