@@ -8,12 +8,18 @@ import { AppComponent } from './app.component';
 import { MasterPageComponent } from './master-page/master-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailPageComponent } from './detail-page/detail-page.component';
+import { TabsSectionComponent } from './master-page/tabs-section/tabs-section.component';
+import { TableSectionComponent } from './master-page/table-section/table-section.component';
+import { FloatingToolbarComponent } from './master-page/floating-toolbar/floating-toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MasterPageComponent,
     DetailPageComponent,
+    TabsSectionComponent,
+    TableSectionComponent,
+    FloatingToolbarComponent,
   ],
   imports: [
     BrowserModule,

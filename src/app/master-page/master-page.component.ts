@@ -1,8 +1,15 @@
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { IProductWithSupplier } from './../services/products.service';
 import { ProductsService } from '../services/products.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable, concat, of } from 'rxjs';
 
+export enum FilterEnum {
+  all,
+  outOfStock,
+  inStock,
+  scarce
+}
 export interface IProductWithSupplierRow extends IProductWithSupplier {
   selected:boolean
 } 
@@ -14,42 +21,23 @@ export interface IProductWithSupplierRow extends IProductWithSupplier {
 })
 export class MasterPageComponent implements OnInit {
   title = "Manage Products"
-  products:IProductWithSupplierRow[]
+  products$:Observable<IProductWithSupplierRow[]>
   constructor(private productsService:ProductsService) { }
 
   ngOnInit() {
-    this.productsService.getProductsWithSuppliers().pipe(
+    const productsService$ = this.productsService.getProductsWithSuppliers().pipe(
       map(prod => prod.map((p:IProductWithSupplierRow) => {
         p.selected = false
         return p
       }))
     )
-    .subscribe(products => this.products = products)
+  this.products$ = concat(of([]), productsService$)
+
   }
 
-  getStylingForStock(row:IProductWithSupplier) {
-    if(row.UnitsInStock < 10) return 'unit-shortage'
-    return 'unit-in-stock'
-  }
 
-  areAllSelected() {
-    if(!this.products) return false
-    return !this.products.some(p => !p.selected)
-  }
-
-  onToggleAll(event) {
-    const allSelected = this.areAllSelected()
-    if(allSelected) {
-      this.products = this.products.map(p => {
-        p.selected = false
-        return p
-      })
-    } else {
-      this.products = this.products.map(p => {
-        p.selected = true
-        return p
-      })
-    }
+  tabSelectionChange(event) {
+    console.log(event)
   }
 
 }
