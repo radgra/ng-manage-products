@@ -11,7 +11,7 @@ import { DetailPageComponent } from './detail-page/detail-page.component';
 import { TabsSectionComponent } from './master-page/tabs-section/tabs-section.component';
 import { TableSectionComponent } from './master-page/table-section/table-section.component';
 import { FloatingToolbarComponent } from './master-page/floating-toolbar/floating-toolbar.component';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +27,8 @@ import { FloatingToolbarComponent } from './master-page/floating-toolbar/floatin
     Ui5WebComponentsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FundNgxModule
+    FundNgxModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

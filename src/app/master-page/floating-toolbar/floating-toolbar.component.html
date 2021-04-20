@@ -1,10 +1,10 @@
 <div fd-bar [barDesign]="'floating-footer'">
     <div fd-bar-right>
         <fd-bar-element>
-            <button fd-button [fdType]="'positive'" [compact]="false">Save</button>
+            <button fd-button [fdType]="'positive'" [compact]="false" (click)="this.onOrder.emit()">Order</button>
         </fd-bar-element>
         <fd-bar-element>
-            <button fd-button [fdType]="'negative'" [compact]="false">Cancel</button>
+            <button fd-button [fdType]="'negative'" [compact]="false" (click)="onRemove.emit()">Remove</button>
         </fd-bar-element>
     </div>
 </div>

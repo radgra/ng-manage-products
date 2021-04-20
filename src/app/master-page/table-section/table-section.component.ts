@@ -1,18 +1,34 @@
+import { startWith, map } from 'rxjs/operators';
 import { IProductWithSupplierRow } from './../master-page.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-table-section',
   templateUrl: './table-section.component.html',
   styleUrls: ['./table-section.component.scss']
 })
-export class TableSectionComponent implements OnInit {
+export class TableSectionComponent implements OnInit, OnChanges {
+  selectionChangedSub$:Subject<null> = new Subject() 
+  allSelected$:Observable<boolean> = this.selectionChangedSub$.asObservable().pipe(
+    map(_ => {
+      const result = this.areAllSelected()
+      return result
+    })
+  ) 
   @Input() products:IProductWithSupplierRow[]
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes:SimpleChanges) {
+    if(changes.products) {
+      console.log('table')
+      console.table(changes.products.currentValue)
+      this.selectionChangedSub$.next()
+    }
+  }
 
   getStylingForStock(row:IProductWithSupplierRow) {
     if(row.UnitsInStock < 10) return 'unit-shortage'
@@ -20,8 +36,11 @@ export class TableSectionComponent implements OnInit {
   }
 
   areAllSelected() {
+    // debugger
     if(!this.products) return false
-    return !this.products.some(p => !p.selected)
+    if(this.products.length === 0) return false
+    const result = this.products.every(p => p.selected)
+    return result
   }
 
   onToggleAll(event) {
@@ -37,6 +56,17 @@ export class TableSectionComponent implements OnInit {
         return p
       })
     }
+    this.selectionChangedSub$.next()
   }
 
+  onCheck(event:CustomEvent, product:IProductWithSupplierRow) {
+    product.selected = !product.selected
+    this.products = [...this.products]
+    console.log('emitted')
+    this.selectionChangedSub$.next()
+  }
+
+  getSelection() {
+    return this.products.filter(p => !!p.selected)
+  }
 }

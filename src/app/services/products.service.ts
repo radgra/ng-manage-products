@@ -40,4 +40,9 @@ export class ProductsService {
     return this.http.get('./assets/Suppliers.json',{headers})
 
   }
+
+
+  updateProductsStock(products:IProduct) {
+    
+  }
 }
