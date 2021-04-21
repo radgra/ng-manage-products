@@ -1,4 +1,4 @@
-# NgManageProducts
+# Angular version of Fiori Manage Products app 
 
 [Demo](https://radgra.github.io/ng-manage-products/)
 
