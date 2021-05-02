@@ -2,7 +2,7 @@ import { ISupplier } from './../../models/supplier.interface';
 import { IProduct } from '../../models/product.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators'
 
 
@@ -16,6 +16,7 @@ export interface IProductWithSupplier extends IProduct {
 export class ProductsService {
   private productsSubject: BehaviorSubject<IProductWithSupplier[]> = new BehaviorSubject([])
   products$ = this.productsSubject.asObservable()
+  
   constructor(private http: HttpClient) { 
 
     combineLatest([this.loadProducts(),this.loadSuppliers()]).pipe(

@@ -1,9 +1,9 @@
 import { TableSectionComponent } from './table-section/table-section.component';
-import { map, startWith, distinctUntilChanged, scan, switchMap, pluck } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { IProductWithSupplier } from './../services/products.service';
 import { ProductsService } from '../services/products.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, concat, of, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 
 export enum FilterEnum {
   all,

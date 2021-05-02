@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { IProductWithSupplier, ProductsService } from '../services/products.service';
 
@@ -8,20 +9,24 @@ import { IProductWithSupplier, ProductsService } from '../services/products.serv
   templateUrl: './detail-page.component.html',
   styleUrls: ['./detail-page.component.scss']
 })
-export class DetailPageComponent implements OnInit {
+export class DetailPageComponent implements OnInit, OnDestroy {
   product:IProductWithSupplier = null
+  private productSub:Subscription
   constructor(private productsService: ProductsService, private route:ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
+    this.productSub = this.route.paramMap.pipe(
       switchMap((params:ParamMap) => {
         const id = params.get('productId')
         return this.productsService.getProduct(+id)
       })  
     ).subscribe(p => {
-      console.log(p)
       this.product = p
     })
+  }
+
+  ngOnDestroy() {
+    this.productSub.unsubscribe()
   }
 
 }
