@@ -2,6 +2,7 @@ import { startWith, map } from 'rxjs/operators';
 import { IProductWithSupplierRow } from './../master-page.component';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-section',
@@ -17,7 +18,7 @@ export class TableSectionComponent implements OnInit, OnChanges {
     })
   ) 
   @Input() products:IProductWithSupplierRow[]
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -68,5 +69,9 @@ export class TableSectionComponent implements OnInit, OnChanges {
 
   getSelection() {
     return this.products.filter(p => !!p.selected)
+  }
+
+  onRowClick(product:IProductWithSupplierRow) {
+    this.router.navigate(['/', 'products', product.ProductID])
   }
 }

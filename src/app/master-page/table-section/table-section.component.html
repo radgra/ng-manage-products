@@ -29,9 +29,9 @@
     <ui5-table-column slot="columns-7"  sticky=""  class="icon-column">
     </ui5-table-column>
 
-    <ui5-table-row *ngFor="let product of products">
-        <ui5-table-cell slot="default-1">
-            <ui5-checkbox [checked]="product.selected" (change)="onCheck($event, product)"></ui5-checkbox>
+    <ui5-table-row *ngFor="let product of products" (click)="onRowClick(product)">
+        <ui5-table-cell slot="default-1" >
+            <ui5-checkbox [checked]="product.selected" (change)="onCheck($event, product)" appPreventClick></ui5-checkbox>
         </ui5-table-cell>
         <ui5-table-cell slot="default-2" class="product-cell">{{product.ProductName}}</ui5-table-cell>
         <ui5-table-cell slot="default-3">{{product.supplierData.CompanyName}}</ui5-table-cell>

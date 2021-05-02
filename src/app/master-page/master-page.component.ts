@@ -23,61 +23,22 @@ export interface IProductWithSupplierRow extends IProductWithSupplier {
 export class MasterPageComponent implements OnInit {
   @ViewChild(TableSectionComponent) tableSelection: TableSectionComponent
   title = "Manage Products"
-  allProducts$: Observable<IProductWithSupplierRow[]>
-  filteredProducts$: Observable<IProductWithSupplierRow[]>
+  allProducts$: Observable<IProductWithSupplier[]>
+  filteredProducts$: Observable<IProductWithSupplier[]>
   tabSelection$: BehaviorSubject<number> = new BehaviorSubject(FilterEnum.all)
   searchInputSub$: BehaviorSubject<string> = new BehaviorSubject('')
-  deletedProducts$: BehaviorSubject<IProductWithSupplierRow> = new BehaviorSubject(null)
-  orderedProduct$: BehaviorSubject<IProductWithSupplierRow> = new BehaviorSubject(null)
   searchInput$ = this.searchInputSub$.asObservable().pipe(distinctUntilChanged())
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
-    const deletedProducts = this.deletedProducts$.asObservable().pipe(
-      scan((acc, val) => {
-        if (val) {
-          acc.push(val)
-        }
-        return acc
-      }, []) 
-    ) as Observable<IProductWithSupplierRow[]>
-
-    const orderedProduct = this.orderedProduct$.asObservable().pipe(
-      pluck('ProductID')
-    )
-
-    this.allProducts$ = this.getAllProducts().pipe(
-      switchMap((products) => {
-        return deletedProducts.pipe(
-          map((elems: IProductWithSupplier[]) => {
-            const reduced = products.reduce((acc:IProductWithSupplierRow[], p: IProductWithSupplierRow) => {
-              const exists = elems.some(el => el.ProductID === p.ProductID)
-              if (!exists) acc.push(p)
-              return acc
-            }, [])
-            return reduced
-          })
-        )
-      })
-    )
+    this.allProducts$ = this.productsService.products$
     this.filteredProducts$ = this.getFilteredProducts()
-    this.filteredProducts$.subscribe(console.log)
-
   }
 
-  private getAllProducts() {
-    const productsService$ = this.productsService.getProductsWithSuppliers().pipe(
-      map(prod => prod.map((p: IProductWithSupplierRow) => {
-        p.selected = false
-        return p
-      }))
-    )
-    return concat(of([]), productsService$) as Observable<IProductWithSupplierRow[]>
-  }
 
   private getFilteredProducts() {
-    return combineLatest(this.allProducts$, this.tabSelection$.asObservable(), this.searchInput$).pipe(
+    return combineLatest([this.allProducts$, this.tabSelection$.asObservable(), this.searchInput$]).pipe(
       map(([products, filter, search]) => {
         const filtered = this.filterProductsBasedOnUnitsInStock(products, filter)
         return this.filterProductsBasedOnSearch(filtered, search)
@@ -95,8 +56,8 @@ export class MasterPageComponent implements OnInit {
   }
 
 
-  private filterProductsBasedOnUnitsInStock(products: IProductWithSupplierRow[],
-    filterSelection: number): IProductWithSupplierRow[] {
+  private filterProductsBasedOnUnitsInStock(products: IProductWithSupplier[],
+    filterSelection: number): IProductWithSupplier[] {
     if (filterSelection === FilterEnum.all) return products
     if (filterSelection === FilterEnum.inStock) return products.filter(p => p.UnitsInStock > 10)
     if (filterSelection === FilterEnum.outOfStock) return products.filter(p => p.UnitsInStock === 10)
@@ -104,20 +65,20 @@ export class MasterPageComponent implements OnInit {
   }
 
 
-  private filterProductsBasedOnSearch(products: IProductWithSupplierRow[], searchValue: string) {
+  private filterProductsBasedOnSearch(products: IProductWithSupplier[], searchValue: string) {
     return products.filter(p => p.ProductName.toLowerCase().includes(searchValue.toLowerCase()))
   }
 
   onOrder() {
     const selection = this.tableSelection.getSelection()
+    const productIds = selection.map(p => p.ProductID)
+    this.productsService.orderProducts(productIds, 10)
   }
-
+  
   onRemove() {
-    console.log('remove')
     const selection = this.tableSelection.getSelection()
-    selection.forEach(el => {
-      this.deletedProducts$.next(el)
-    })
+    const productIds = selection.map(p => p.ProductID)
+    this.productsService.removeProducts(productIds)
   }
 
 }

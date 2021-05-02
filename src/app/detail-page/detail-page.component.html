@@ -1,4 +1,7 @@
-<ui5-shellbar [primaryTitle]="'Detail'" logo="assets/sap-logo-svg.svg">
+<ui5-shellbar [primaryTitle]="'Product Detail'" logo="assets/sap-logo-svg.svg">
+    <ui5-button icon="nav-back" slot="startButton" [routerLink]="''"></ui5-button>
 </ui5-shellbar>
-<app-detail-header></app-detail-header>
-<app-supplier-info></app-supplier-info>
+<ng-container *ngIf="product">
+    <app-detail-header></app-detail-header>
+    <app-supplier-info [supplier]="product.supplierData"></app-supplier-info>
+</ng-container>

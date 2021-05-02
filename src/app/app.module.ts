@@ -14,6 +14,7 @@ import { FloatingToolbarComponent } from './master-page/floating-toolbar/floatin
 import { FormsModule } from '@angular/forms';
 import { DetailHeaderComponent } from './detail-page/detail-header/detail-header.component';
 import { SupplierInfoComponent } from './detail-page/supplier-info/supplier-info.component';
+import { PreventClickDirective } from './directives/prevent-click.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { SupplierInfoComponent } from './detail-page/supplier-info/supplier-info
     FloatingToolbarComponent,
     DetailHeaderComponent,
     SupplierInfoComponent,
+    PreventClickDirective,
   ],
   imports: [
     BrowserModule,
