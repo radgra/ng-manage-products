@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MasterPageComponent } from './master-page.component';
 
@@ -6,7 +6,7 @@ describe('MasterPageComponent', () => {
   let component: MasterPageComponent;
   let fixture: ComponentFixture<MasterPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MasterPageComponent ]
     })
