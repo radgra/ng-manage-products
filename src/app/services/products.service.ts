@@ -24,7 +24,7 @@ export class ProductsService {
   }
   
   getProductsWithSuppliers():Observable<IProductWithSupplier[]> {
-    return combineLatest(this.getProducts(),this.getSuppliers()).pipe(
+    return combineLatest([this.getProducts(),this.getSuppliers()]).pipe(
       map(([products,suppliers]:[IProduct[], ISupplier[]]) => {
         return products.map((p:IProductWithSupplier) => {
           p.supplierData = suppliers.find((s:ISupplier) => p.SupplierID === s.SupplierID)

@@ -11,6 +11,7 @@ import "@ui5/webcomponents/dist/Link";
 import "@ui5/webcomponents/dist/TabContainer";
 import "@ui5/webcomponents/dist/Tab";
 import "@ui5/webcomponents/dist/Label";
+import "@ui5/webcomponents/dist/ProgressIndicator";
 // Table
 import "@ui5/webcomponents/dist/Table.js";
 import "@ui5/webcomponents/dist/TableColumn.js"; 

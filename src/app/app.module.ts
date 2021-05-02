@@ -12,6 +12,8 @@ import { TabsSectionComponent } from './master-page/tabs-section/tabs-section.co
 import { TableSectionComponent } from './master-page/table-section/table-section.component';
 import { FloatingToolbarComponent } from './master-page/floating-toolbar/floating-toolbar.component';
 import { FormsModule } from '@angular/forms';
+import { DetailHeaderComponent } from './detail-page/detail-header/detail-header.component';
+import { SupplierInfoComponent } from './detail-page/supplier-info/supplier-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,8 @@ import { FormsModule } from '@angular/forms';
     TabsSectionComponent,
     TableSectionComponent,
     FloatingToolbarComponent,
+    DetailHeaderComponent,
+    SupplierInfoComponent,
   ],
   imports: [
     BrowserModule,

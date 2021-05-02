@@ -1,0 +1,26 @@
+:host {
+    background-color: white;
+    padding: 1em 2rem 3em;
+    display: block;
+}
+
+.product-info {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 100%;
+    color: var(--sapNeutralTextColor);
+}
+
+.right-panel {
+    flex-basis: 30%;
+}
+
+.product-stock {
+    text-align: right;
+    margin-bottom: 0.4rem;
+}
+
+ui5-title {
+    margin-bottom: 2rem;
+}
