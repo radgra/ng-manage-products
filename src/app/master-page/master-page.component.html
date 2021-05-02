@@ -1,4 +1,5 @@
-<ui5-shellbar [primaryTitle]="title" logo="assets/sap-logo-svg.svg">
+<ui5-shellbar [primaryTitle]="title">
+    <img slot="logo" src="assets/sap-logo-svg.svg"/>
 </ui5-shellbar>
 
 <app-tabs-section [products]="allProducts$ | async" (selectionChange)="tabSelectionChange($event)"></app-tabs-section>

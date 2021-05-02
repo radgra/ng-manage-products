@@ -49,3 +49,13 @@ ui5-table-cell, ui5-table-column, ui5-checkbox  {
 ui5-table-row {
     cursor: pointer;
 }
+
+::ng-deep ui5-table-cell td {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+:host ::ng-deep td {
+    padding: 0.1rem 0.25rem !important;
+}
